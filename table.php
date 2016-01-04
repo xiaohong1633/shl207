@@ -1,5 +1,5 @@
 <?php
-	require_once("./dBServer.php");
+	require_once("./DB/dBServer.php");
 	$dbs = new DBServer();
 	$json = $dbs->squery();
 ?>
