@@ -1,8 +1,8 @@
-<?php
+<!--<php
 	require_once("./DB/dBServer.php");
 	$dbs = new DBServer();
 	$json = $dbs->squery();
-?>
+?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -66,7 +66,7 @@
 		background-color:#eee;
 		text-decoration:none;
 	}
-	table {
+	/*table {
 	font-family: verdana,arial,sans-serif !important;
 	font-size:12px !important;
 	color:#333333 !important;
@@ -91,12 +91,9 @@
 		background-color: #ffffff !important;
 		;
 	}
-	/*tr:hover{
-		background-color:#d4e3e5 !important;
-	}*/
 	td:hover{
 		background-color:#d4e3e5 !important;
-	}
+	}*/
 </style>
 <script type='text/javascript'>
 function getQueryParameter(key){
@@ -129,11 +126,11 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	/*$.post("http://localhost:8080/mytable/data.json",{
+	$.post("http://localhost:8080/shl207/mytable/data.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
-	});*/
+	});
 //设置同步请求获取数据第二种方式
 /*$.ajax({
 	//url:"http://localhost:8899/JSONP/JSONPServlet",
@@ -188,10 +185,10 @@ var ls = window.localStorage;
 ls.clear();
 ls.setItem('num1',json);
 var mjson = eval(json);*/
-var mmjson = '<?php echo $json; ?>';
+/*var mmjson = '<php echo $json; ?>';
 var mjson = eval(mmjson);
 //console.log(mjson);
-$("#div").table(mjson);
+$("#div").table(mjson);*/
 /*var myArray=new Array();    ///数组
               myArray[0]="fgh";
               myArray[1]="rt";
