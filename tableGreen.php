@@ -122,7 +122,7 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	$.post("http://localhost/shl207/mytable/data2.json",{
+	$.post("http://localhost:8080/shl207/data2.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
