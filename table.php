@@ -1,8 +1,3 @@
-<!--<php
-	require_once("./DB/dBServer.php");
-	$dbs = new DBServer();
-	$json = $dbs->squery();
-?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -126,7 +121,7 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	$.post("http://localhost:8080/shl207/mytable/data.json",{
+	$.post("/shl207/mytable/data.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
