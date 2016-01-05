@@ -170,7 +170,7 @@
 		array("name"=>"陕西省","value"=>42,"color"=>0xffff00),
 		);
 	//$draw->draw_sector3d($img,400,400,400,300,20,18,312,0x009999);
-	//$draw->drawPie($dataArray,400,300,14);
-	imagefilledarc($img, 50, 50, 100, 50, 75, 360 , 0xffff00, IMG_ARC_PIE);
-	imagepng($img);
+	$draw->drawPie($dataArray,400,300,14);
+	//imagefilledarc($img, 50, 50, 100, 50, 75, 360 , 0xffff00, IMG_ARC_PIE);
+	//imagepng($img);
 ?>
