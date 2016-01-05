@@ -98,7 +98,7 @@
 				$sx += $ox;
 				imagefill($img,$sx,$sy,$clr);
 			}
-			imagepng($img);
+			//imagepng($img);
 		}
 		//获取索引色
 		public function draw_getindexcolor($img,$clr){
@@ -160,6 +160,7 @@
 			}  
 			imagepng($img); 
 		}
+		
 		
 }
 	header("Content-type:image/png");
