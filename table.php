@@ -61,7 +61,7 @@
 		background-color:#eee;
 		text-decoration:none;
 	}
-	/*table {
+	table {
 	font-family: verdana,arial,sans-serif !important;
 	font-size:12px !important;
 	color:#333333 !important;
@@ -88,7 +88,7 @@
 	}
 	td:hover{
 		background-color:#d4e3e5 !important;
-	}*/
+	}
 </style>
 <script type='text/javascript'>
 function getQueryParameter(key){
