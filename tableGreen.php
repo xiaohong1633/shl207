@@ -21,10 +21,16 @@
 	.table-bordered > tbody > tr > td.ptd{
 		padding:0;	
 	}
+	.pager{
+		position:relative;	
+	}
 	.pager li{
 		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		font-size: 14px;
 		line-height: 1.42857;
+		position: relative;
+		 top: -50%;
+		 +top: -50%;
 	}
 	.pager li > span{
 		color: #337ab7;	
