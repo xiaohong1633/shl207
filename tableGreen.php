@@ -21,9 +21,7 @@
 	.table-bordered > tbody > tr > td.ptd{
 		padding:0;	
 	}
-	.pager{
-		position:relative;	
-	}
+	
 	.pager li{
 		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		font-size: 14px;
