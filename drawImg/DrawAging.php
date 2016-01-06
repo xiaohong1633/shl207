@@ -1,7 +1,8 @@
 <?php
 	class DRAW{
 		private $angle_step = 3;
-		private $font_used = "c:/windows/fonts/simhei.ttf";
+		//private $font_used = "c:/windows/fonts/simhei.ttf";
+		private $font_used = "../tt/simsun.ttc";
 		function __construct(){}
 		//获取$clr对应的暗色
 		public function draw_getDarkColor($img,$clr){

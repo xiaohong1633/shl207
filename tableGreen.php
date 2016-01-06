@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>表格JQUERY插件</title>
+<title>单行数据模式</title>
 <link rel='stylesheet' href="bootstrap/css/bootstrap.min.css" type='text/css'/>
 <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -53,9 +53,6 @@
 		background-color:#ffffff;
 		background-clip:border-box;
 		min-width:110px;
-		/*border-bottom: 6px solid #ffffff;
-   		border-left: 6px solid transparent;
-    	border-right: 6px solid transparent;*/
 	}
 	#contextMenu ul li{
 		margin-left:6px;
@@ -89,10 +86,10 @@
 	}
 	table td{
 		background-color: #def3ca !important;
-		border: 2px solid #e7efe0 !important;
-		border-radius: 2px !important;
+		border: 1px solid #e7efe0 !important;
+		border-radius: 10px !important;
 		color: #666 !important;
-		padding: 10px !important;
+		padding: 0px !important;
 		text-align: center !important;
 		text-shadow: 1px 1px 1px #fff !important;	
 	}
@@ -115,13 +112,6 @@ function getQueryParameter(key){
 //alert(getQueryParameter('name'));
 //return false;
 $(function(){
-	//第一种方式
-	/*$.getJSON("http://192.168.1.109:8080/ReportSystem/zonghe_latn.action",{
-		id:11
-	},function(data,textState,xhr){
-		var mjson = eval(data);
-		$("#div").table(mjson);
-	});*/
 	$.post("/shl207/data2.json",{
 		id:1
 	},function(data){
