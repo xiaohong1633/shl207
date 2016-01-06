@@ -1,8 +1,3 @@
-<!--<php
-	require_once("./DB/dBServer.php");
-	$dbs = new DBServer();
-	$json = $dbs->squery();
-?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -74,6 +69,7 @@
 	}
 	table th{
 		background: rgba(0, 0, 0, 0) -moz-linear-gradient(center bottom , rgb(123, 192, 67) 2%, rgb(139, 198, 66) 51%, rgb(158, 217, 41) 87%) repeat scroll 0 0 !important;
+		background-color:rgb(157,217,41);
 		border-color: #93ce37 #93ce37 #9ed929 !important;
 		border-image: none !important;
 		border-style: solid !important;
