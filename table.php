@@ -124,7 +124,7 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	$.post("/shl207/mytable/data2.json",{
+	$.post("/shl207/data2.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
