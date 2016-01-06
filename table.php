@@ -29,6 +29,9 @@
 		background-color:#eee;
 		text-decoration:none;	
 	}
+	.pager li > a, .pager li > span{
+		
+	}
 	#contextMenu{
 		cursor:auto;
 		display:none;			
@@ -121,7 +124,7 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	$.post("/shl207/data.json",{
+	$.post("/shl207/mytable/data2.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
