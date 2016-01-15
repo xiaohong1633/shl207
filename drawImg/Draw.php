@@ -1,7 +1,7 @@
 <?php
 	class Draw{
 		public $angle_step = 3; //定义画椭圆弧度时的角度步长。
-		public $font_used = "c:/windows/fonts/simhei.ttf";
+		public $font_used = "../tt/simsun.ttc";
 		function __construct(){}
 		//获取$clr对应的暗色。
 		public function draw_getdarkcolor($img,$clr){

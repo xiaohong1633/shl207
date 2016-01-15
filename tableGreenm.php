@@ -108,7 +108,7 @@ function getQueryParameter(key){
 //alert(getQueryParameter('name'));
 //return false;
 $(function(){
-	$.post("/shl207/data.json",{
+	$.post("/shl207/mytable/data.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);

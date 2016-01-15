@@ -107,7 +107,7 @@ $(function(){
 		e.stopPropagation();
 		$(this).children('td').css('background-color','#d5eaf0');;	
 	});
-	$.post("/shl207/data.json",{
+	$.post("/shl207/mytable/data.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
