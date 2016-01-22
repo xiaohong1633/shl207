@@ -12,24 +12,20 @@
 	function getMinMax($data){
 		$length = count($data);
 		//最小值和最大值
-		$min = 0;
-		$max = 0;
+		$min='';
+		$max='';
 		for($i=0;$i<$length;$i++){
 			$tmpData = $data[$i];
-			if($min){
-				if($min>$tmpData['value']){
-					$min=$tmpData['value'];
-				}
-			}else{
-				$min = $tmpData['value'];
+			if($i==0){
+				$max=$min=intval($tmpData['value']);
 			}
-			if($max){
-				if($max<$tmpData['value']){
-					$max=$tmpData['value'];
-				}
-			}else{
-				$max = $tmpData['value'];
+			if(intval($min)>intval($tmpData['value'])){
+				$min=intval($tmpData['value']);
 			}
+		
+			if(intval($max)<intval($tmpData['value'])){
+				$max=intval($tmpData['value']);
+			}			
 		}
 		return array('min'=>$min,'max'=>$max);
 	}
@@ -62,7 +58,7 @@
 		//构造函数
 		function __construct($width=400,$height=300,$name='示例图片',$data=array(),
 			$beginValueY=0,$everySetpY=0,$beginValueX=0,$everyStepX=0,
-			$imageType='image/jpeg',$fontSize=14){
+			$imageType='image/jpeg',$fontSize=10){
 			$this->width = $width;
 			$this->height = $height;
 			$this->name = $name;
@@ -178,7 +174,7 @@
 				//echo "length:".$length;
 				$textBeginX = $beginX - $length*$this->fontSize;
 				$textBeginY = $beginY + $this->fontSize/2;				
-				//echo "textBeginX:".$textBeginX." BeginY:".$beginY.'<br/>';
+				//secho "strlen:".$length."textBeginX:".$textBeginX." BeginY:".$beginY.'<br/>';
 				imagettftext($this->image, $this->fontSize, 0, $textBeginX, $textBeginY, $this->textColor, $this->fontFile,$text);
 				//起点终点间画虚线
 				$endX = $this->E_X;
@@ -200,16 +196,18 @@
 			$beginY = $this->OY;
 			$endY = $this->E_Y+15;
 			$everyStepValueY = $this->everySetpY;
-			if($dataValue < $this->min || $dataValue > $this->max){
-				echo "数值越界！";
+			//echo "dataValue:".intval($dataValue).' min:'.intval($this->min).' max:'.intval($this->max).'<br/>';
+			if(intval($dataValue)<intval($this->min) || intval($dataValue) > intval($this->max)){
+				echo "数值小越界！";
 				return 0;
 			}
 			$fNum = ceil(($this->max-$this->beginValueY)/$everyStepValueY);
+			//$everyStepY是像素间隔值
 			$everyStepY = ($beginY - $endY) / $fNum;
 			for($i=0;$i<$fNum;$i++){
 				$nextData = $this->beginValueY + ($i+1)*$everyStepValueY;
 				//数据上线
-				if($dataValue < $nextData){
+				if($dataValue <= $nextData){
 					$preData = $nextData - $everyStepValueY;
 					$percent = ($dataValue - $preData) / $everyStepValueY;
 					$resultY = $this->OY - ($i+$percent)*$everyStepY;
@@ -225,12 +223,13 @@
 			//$data = $this->data;
 			$color = $this->textColor;
 			$dataLength = count($data);
-			$everyStepX = ($this->E_X - $this->OX)/($dataLength+1);
+			
 			//如果存在键值，表示竖线需要画到一定程度，否则画到顶部
-			if(array_key_exists('name', $data[0])||array_key_exists('value', $data[0])){
+			if(@array_key_exists('name', $data[0]) && @array_key_exists('value', $data[0])){
 				//这里有大量的值需要一个一个地画出来
 				//判断长度是否大于x轴像素长度
 				if($dataLength<($this->E_X - $this->OX)){
+					$everyStepX = ($this->E_X - $this->OX)/($dataLength+1);
 					//画一个一个的小长方形
 					for($i =0;$i<$dataLength;$i++){
 						//起点坐标
@@ -244,12 +243,17 @@
 						//获取值
 						$value = $tempData['value'];
 						$endX = $beginX+$everyStepX;
-						$endY = $this->getYAxis($value);						
+						$endY = $this->getYAxis(intval($value));						
 						imagefilledrectangle($this->image, $beginX, $beginY, $endX, $endY, $color);
+						//下方写字
+						$strSize=strlen($tempData['name'])/6;
+						$beginTextX = $beginX - $strSize+$this->fontSize;
+						$beginTextY = $beginY + $this->fontSize+5;
+						imagettftext($this->image, $this->fontSize,0, $beginTextX, $beginTextY, $color, $this->fontFile, $tempData['name']);
 					}
 				}else{
-					//画带颜色直线
-					$everyStepXAxis = ($this->E_X - $this->OX)/$dataLength;
+					//画带颜色直线,右侧留15像素
+					$everyStepXAxis = ($this->E_X - $this->OX -15)/$dataLength;
 					for($i=0;$i<$dataLength;$i++){
 						//起点
 						$beginX = $this->OX+($i+1)*$everyStepXAxis;
@@ -262,13 +266,15 @@
 						}
 						//获取值
 						$value = $tempData['value'];
-						$endY = $endY = $this->getYAxis($value);
+						$endY = $endY = $this->getYAxis(intval($value));
+						/*if($i == $dataLength-1){
+							echo 'endX:'.$endX.' endY:'.$endY.' value:'.$value;
+						}*/
 						imageline($this->image, $beginX, $beginY, $endX, $endY, $color);
 					}
-				}
-				
-				
+				}				
 			}else{
+				$everyStepX = ($this->E_X - $this->OX)/($dataLength+1);
 				//起点坐标
 				$beginX = 0;
 				$beginY = $this->OY;
@@ -281,16 +287,118 @@
 						$color = imagecolorallocate($this->image, 0xc8, 0xc8, 0xc8);
 					}
 					$dashLineColor = $color;
-					$white = imagecolorallocate($this->image, 0x33, 0x85, 0xff);
+					$white = imagecolorallocate($this->image, 0xff, 0xff, 0xff);
 					$style = array($dashLineColor, $dashLineColor, $dashLineColor, $dashLineColor, $dashLineColor, $white, $white, $white, $white, $white); 
 					imagesetstyle($this->image, $style);
 					//imageline($img, 20, 20, 500, 20, IMG_COLOR_STYLED); 
 					imageline($this->image, $beginX, $beginY, $endX, $endY, IMG_COLOR_STYLED);
+					//在对应坐标下面写字哈哈
+					$this->drawTextUnder($data[$i-1],$beginX,$beginY,$everyStepX,0,0);
 				}
 			}			
 		}
+		//坐标下面写字
+		public function drawTextUnder($text,$beginX,$beginY,$everySpaceX,$direction,$zh_cn_flag=0){
+			//$direction 0 水平 1竖直写入
+			//$zh_cn_flag 0英文 1 汉语
+			//strlen字符串中间位置
+			$strlen = 0;
+			$strSize = 0;
+			if($zh_cn_flag == 0){
+				$strSize = strlen($text);
+				$strlen = strlen($text)/2;
+			}else if($zh_cn_flag == 1){
+				$strSize = strlen($text)/3;
+				$strlen = strlen($text)/6;
+			}
+			if($direction == 0){
+				//echo "strlen:".$strlen;
+				$beginX = $beginX-$strlen*$this->fontSize;
+				$beginY = $beginY+$this->fontSize+5;
+				imagettftext($this->image, $this->fontSize, 0, $beginX, $beginY, $this->textColor, $this->fontFile, $text);
+			}else if($direction == 1){
+				//纵向字体
+				$beginX = $beginX-$strlen*$this->fontSize;
+				$beginY = $beginY+$this->fontSize+5;
+				imagettftext($this->image, $this->fontSize,270, $beginX, $beginY, $this->textColor, $this->fontFile, $text);
+			}
+		}
+		//画柱状图
+		public function drawColumn(){
+			$data = $this->data;
+			//首先计算数组长度
+			$arrayLength = count($data);
+			if(!$arrayLength){
+				echo '数组异常！';
+				return 0;
+			}
+			$everySpaceX = ($this->E_X - $this->OX -15)/(2*$arrayLength + 1);
+			for($i=0;$i<$arrayLength;$i++){
+				$beginX = $this->OX + $everySpaceX*($i*2+1);
+				$beginY = $this->OY;
+				$endX = $beginX+$everySpaceX;
+				$endY = $this->getYAxis(intval($data[$i]['value']));
+				imagefilledrectangle($this->image, $beginX, $beginY, $endX, $endY, $data[$i]['color']);
+				imageline($this->image, $beginX, $beginY, $endX, $beginY, $this->textColor);
+				//将字体写到对应柱状下面
+				$this->drawTextUnder($data[$i]['name'],$beginX,$beginY,$everySpaceX,1,1);
+			}
+		}
+		public function drawBorkenLine($color=0,$zh_cn_flag=0){
+			if($color==0){
+				$color=$this->textColor;
+			}
+			$data = $this->data;
+			$dataLength = count($data);
+			$everyStepXAxis = ($this->E_X - $this->OX -15)/($dataLength + 1);
+			//记录前面节点坐标
+			$preDX = 0;
+			$preDY = 0;
+			for($i=0;$i<$dataLength;$i++){
+				$beginX = $this->OX+($i+1)*$everyStepXAxis;
+				$beginY = $this->getYAxis(intval($data[$i]['value']));
+				if(@$data[$i]['color']){
+					$color = $data[$i]['color'];
+				}
+				//以此点为中心画圆圈
+				imagefilledellipse($this->image, $beginX, $beginY, 10, 10, $color);
+				//在此点上方写字
+				//var_dump($data);
+				if(@$text = $data[$i]['name']){
+					//echo "text:".$text."<br/>";
+					$strSize = 0;
+					$beginTextX = 0;
+					$beginTextY = 0;
+					if($zh_cn_flag ==0){
+						$strSize = (strlen($text));
+						$beginTextX = $beginx - $strSize/2;
+						$beginTextY = $beginY -5;
+					}else if($zh_cn_flag ==1){
+						$strSize = (strlen($text)/3);
+						$beginTextX = $beginX - $strSize/2;
+						$beginTextY = $beginY -5;
+					}
+					imagettftext($this->image, $this->fontSize, 0, $beginTextX, $beginTextY, $color, $this->fontFile, $text);
+				}
+				//从此点画虚线到横坐标
+				if($color==0){
+					$color = imagecolorallocate($this->image, 0xc8, 0xc8, 0xc8);
+				}
+				$dashLineColor = $color;
+				$white = imagecolorallocate($this->image, 0xff, 0xff, 0xff);
+				$style = array($dashLineColor, $dashLineColor, $dashLineColor, $dashLineColor, $dashLineColor, $white, $white, $white, $white, $white); 
+				imagesetstyle($this->image, $style);
+				imageline($this->image, $beginX, $beginY, $beginX, $this->OY, IMG_COLOR_STYLED);
+				//画此点到前一节点的虚线
+				if($preDX && $preDY){
+					imageline($this->image, $beginX, $beginY, $preDX, $preDY, $color);
+				}
+				$preDX = $beginX;
+				$preDY = $beginY;
+			}
+		}
 		//输出图像
-		public function outPut(){
+		public function outPut($flag){
 			if(!$this->OX){
 				$this->OX = 0.1*$this->width;
 			}
@@ -305,34 +413,58 @@
 			}
 			$this->drawXYAsis();
 			$this->drawDashLine();
-			$this->drawVerticalLine($this->data);
-			
+			if($flag == 1){
+				$this->drawVerticalLine($this->data);
+			}else if($flag==2){
+				$this->drawVerticalLine(array(20,40,60,80));
+			}else if($flag==3){
+				$this->drawColumn();
+			}else if($flag==4){
+				$this->drawBorkenLine(0xff0000,1);
+			}
 			header('Content-Type:'.$this->imageType);
 			imagejpeg($this->image);
 		}
 
 	}
-$dataArray = generateData(100,1,99);
 $dataArray = array(
-		array("name"=>"江苏省","value"=>32,"color"=>0x99ff00),
+		array("name"=>"江苏省","value"=>46,"color"=>0x99ff00),
 		array("name"=>"安徽省","value"=>42,"color"=>0xff6666),
 		array("name"=>"福建省","value"=>52,"color"=>0x0099ff),
 		array("name"=>"广东省","value"=>62,"color"=>0xff99ff),
-		array("name"=>"广西省","value"=>72,"color"=>0xffff99),
-		array("name"=>"河北省","value"=>82,"color"=>0x99ffff),
-		array("name"=>"山东省","value"=>92,"color"=>0xff3333),
-		array("name"=>"山西省","value"=>102,"color"=>0x009999),
-		array("name"=>"陕西省","value"=>112,"color"=>0xffff00)
+		array("name"=>"广西省","value"=>32,"color"=>0x999900),
+		array("name"=>"河北省","value"=>82,"color"=>0x996666),
+		array("name"=>"山东省","value"=>52,"color"=>0xff3333),
+		array("name"=>"山西省","value"=>72,"color"=>0x009999),
+		array("name"=>"陕西省","value"=>112,"color"=>0x444400)
 		);
+$dataMaxArray = array();
 for($i=0;$i<800;$i++){
-	$num = mt_rand(0,8);
-	array_push($dataArray, $dataArray[$num]);
+	$ss = mt_rand(0,99);
+	$color = intval('0x'.$ss.$ss.$ss);
+	array_push($dataMaxArray, array("name"=>"江苏省","value"=>$ss,"color"=>$color));
 }
 //测试代码
 //	$width=400,$height=300,$name='示例图片',$data=array(),
 //	$beginValueY=0,$everySetpY=0,$beginValueX=0,$everyStepX=0,
 //	$imageType='image/jpeg',$fontSize=14
-$drImg =  new DrawArc(800,600,'收入分布图',$dataArray,0,10);
+$flag = $_GET['type'];
+if($flag==1){
+	$drImg =  new DrawArc(800,600,'收入分布图',$dataMaxArray,0,10);
+	$drImg->outPut(1);
+}else if($flag==2){
+	$drImg =  new DrawArc(800,600,'收入分布图',$dataArray,0,10);
+	$drImg->outPut(2);
+}else if($flag==3){
+	$drImg =  new DrawArc(800,600,'收入分布图',$dataArray,0,10);
+	$drImg->outPut(3);
+}else if($flag==4){
+	$drImg =  new DrawArc(800,600,'收入分布图',$dataArray,0,10);
+	$drImg->outPut(4);
+}else if($flag==5){
+	header('location:'.'./DrawAging.php');
+}else{
+	echo "谢谢观看！";
+}
 
-$drImg->outPut();
 ?>
