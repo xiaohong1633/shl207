@@ -35,6 +35,9 @@
 	.pager li > span{
 		color: #337ab7;	
 	}
+	.pager li > a, .pager li > span{
+		-webkit-border-radius: 15px;
+	}
 	.pager li > span:hover{
 		cursor:pointer;
 		background-color:#eee;
@@ -119,7 +122,8 @@ function getQueryParameter(key){
 //alert(getQueryParameter('name'));
 //return false;
 $(function(){
-	$.post("/shl207/mytable/data2.json",{
+	//$.post("/shl207/mytable/data2.json",{
+	$.post("/shl207/data2.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);

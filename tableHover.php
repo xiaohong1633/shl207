@@ -25,6 +25,9 @@
 	.pager li > span{
 		color: #337ab7;	
 	}
+	.pager li > a, .pager li > span{
+		-webkit-border-radius: 15px;
+	}
 	.pager li > span:hover{
 		cursor:pointer;
 		background-color:#eee;
@@ -107,7 +110,8 @@ $(function(){
 		e.stopPropagation();
 		$(this).children('td').css('background-color','#d5eaf0');;	
 	});
-	$.post("/shl207/mytable/data2.json",{
+	//$.post("/shl207/mytable/data2.json",{
+	$.post("/shl207/data2.json",{
 		id:1
 	},function(data){
 		$("#div").table(data);
