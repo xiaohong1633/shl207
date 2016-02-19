@@ -124,8 +124,8 @@ $(function(){
 		var mjson = eval(data);
 		$("#div").table(mjson);
 	});*/
-	$.post("/shl207/mytable/data2.json",{ //本机
-	//$.post("/shl207/data2.json",{	//服务器
+	//$.post("/shl207/mytable/data2.json",{ //本机
+	$.post("/shl207/data2.json",{	//服务器
 		id:1
 	},function(data){
 		//alert(data);
