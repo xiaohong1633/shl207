@@ -128,7 +128,7 @@ $(function(){
 	$.post("/shl207/data2.json",{	//服务器
 		id:1
 	},function(data){
-		alert(data);
+		//alert(data);
 		$("#div").table(data);
 	});
 //设置同步请求获取数据第二种方式
