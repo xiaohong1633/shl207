@@ -24,9 +24,6 @@
 	.pager li > span{
 		color: #337ab7;	
 	}
-	.pager li > a, .pager li > span{
-		-webkit-border-radius: 15px;
-	}
 	.pager li > span:hover{
 		cursor:pointer;
 		background-color:#eee;
@@ -92,7 +89,38 @@
 		text-align: center !important;
 		text-shadow: 1px 1px 1px #fff !important;	
 	}
+.pager li   a, .pager li   span{
+		-moz-border-radius: 15px;
+		-webkit-border-radius: 15px;
+		border-radius: 15px;
+		position:relative;
+		z-index:2;
+		/*behavior: url(ie-css3.htc);*/
+	}	
 </style>
+<!--[if lte IE 7]>
+<style>
+.pager{    
+	height:32px;
+	line-height:32px;
+}
+.pager li  a, .pager li span {
+	color: #337ab7;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    display: inline-block;
+    padding: 5px 14px;
+}
+
+#pageNum,#maxPage{
+	top:4px;
+}
+#pageSkip,#pagePrevious,#pageNext{
+	position:relative;
+	top:7px;
+}
+</style>
+<![endif]-->
 <script type='text/javascript'>
 function getQueryParameter(key){
 	//alert(window.location);
