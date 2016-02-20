@@ -98,7 +98,8 @@
 		this.pageNum = (parseInt(dataLength)%parseInt(this.pageSize)==0) ? (parseInt(dataLength)  / parseInt(this.pageSize)) : (Math.floor(parseInt(dataLength) / parseInt(this.pageSize))+1);
 		//alert("pageNum:"+this.pageNum);
 		this.div = $('<div></div>');
-		$('<ul class="pager"><li><span id="pagePrevious">上一页</span></li><li>第<span id="pageNum">'+this.showNum+'</span>页</li><li><span  id="pageNext">下一页</span></li>&nbsp;&nbsp;共<span id="maxPage">'+this.pageNum+'</span>页&nbsp;&nbsp;<li>第<input id="skiPageNum" type="text" maxlength=4 size=4  />页<span><input style="line-height:1" id="pageSkip" type="button" value="跳转"/></span></li></ul>').appendTo(this.div);
+		//style="line-height:1"
+		$('<ul class="pager">		<li><span id="pagePrevious"><input type="button" value="上一页" /></span></li>		<li>第<span id="pageNum">'+this.showNum+'</span>页</li>		<li><span  id="pageNext"><input type="button" value="下一页" /></span></li>		<li>&nbsp;&nbsp;共<span id="maxPage">'+this.pageNum+'</span>页&nbsp;&nbsp;</li>		<li>第<input id="skiPageNum" type="text" maxlength=4 size=4  />页</li>		<li><span id="pageSkip"><input   type="button" value="跳转" /></span></li>		</ul>').appendTo(this.div);
 		return this.div;
 	}
 	//<form style="display:inline;line-height:1">
